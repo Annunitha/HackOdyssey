@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid px-0">
+    {% if messages %}
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    {% endif %}
+</div>
+
+
+{% if user.is_authenticated %}
+    {% if user_qualityeducation %}
+        <div class="card-body"></div>
+            {% for note in user_qualityeducation %}
+                <ul>
+                    <li><a href="{% url 'qualityeducation_detail' pk=note.pk %}">{{ note.title }}</a></li>
+                </ul>
+            {% endfor %}
+        </div>
+    {% else %}
+        <br>
+        <h3>No notes available. Create one now!</h3>
+    {% endif %}
+{% else %}
+        <br>
+        <h2>You are not logged in!</h2>
+{% endif %}
+
+{% if user.is_authenticated %}
+    
+    <div class = "btn" style="position: fixed; bottom: 70px; right: 20px;">
+        <a class = "btn btn-secondary" role = "button" href="{% url 'logout' %}">Logout</a>
+    </div>
+
+{% else %}
+
+    <div class = "btn" style="position: fixed; bottom: 70px; right: 20px;">
+        <a class = "btn btn-secondary" role = "button" href="{% url 'login' %}">Login</a>
+    </div>
+
+{% endif %}
+
+<div class = "btn" style="position: fixed; bottom: 20px; right: 20px;">
+    <a class = "btn btn-primary" role = "button" href="{% url 'qualityeducation_add' %}">Create</a>
+</div>
+
+
+<style>
+    .btn {
+        right: 10px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+</style>
+
+{% endblock content %}
